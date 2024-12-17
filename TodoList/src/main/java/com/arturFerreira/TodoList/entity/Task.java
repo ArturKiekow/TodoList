@@ -12,6 +12,7 @@ public class Task {
     private String title;
     private String description;
     private boolean finished;
+    @Enumerated(EnumType.STRING)
     private Priority priority;
 
     public Task(Long id, String title, String description, boolean finished, Priority priority) {
@@ -20,6 +21,9 @@ public class Task {
         this.description = description;
         this.finished = finished;
         this.priority = priority;
+    }
+    public Task(){
+
     }
 
     public Long getId() {

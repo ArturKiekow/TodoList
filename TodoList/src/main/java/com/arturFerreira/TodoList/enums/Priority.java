@@ -1,10 +1,10 @@
 package com.arturFerreira.TodoList.enums;
 
 public enum Priority {
-    URGENT("Urgent"),
-    IMPORTANT("Important"),
+    LOW("Low"),
     NORMAL("Normal"),
-    LOW("Low");
+    IMPORTANT("Important"),
+    URGENT("Urgent");
 
     private final String name;
 
