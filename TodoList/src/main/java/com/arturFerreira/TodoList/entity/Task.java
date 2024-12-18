@@ -1,5 +1,6 @@
 package com.arturFerreira.TodoList.entity;
 
+import com.arturFerreira.TodoList.dto.TaskRequestDTO;
 import com.arturFerreira.TodoList.enums.Priority;
 import jakarta.persistence.*;
 
@@ -24,6 +25,13 @@ public class Task {
     }
     public Task(){
 
+    }
+
+    public Task(TaskRequestDTO taskDto){
+        this.title = taskDto.title();
+        this.description = taskDto.description();
+        this.finished = false;
+        this.priority = taskDto.priority();
     }
 
     public Long getId() {

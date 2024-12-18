@@ -1,9 +1,10 @@
 package com.arturFerreira.TodoList.controller;
 
+import com.arturFerreira.TodoList.dto.TaskRequestDTO;
 import com.arturFerreira.TodoList.entity.Task;
 import com.arturFerreira.TodoList.service.TaskService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -31,13 +32,18 @@ public class TaskController {
     }
 
     @PostMapping
-    public ResponseEntity<Task> create(@RequestBody Task task){
-        return ResponseEntity.status(HttpStatus.CREATED).body(taskService.create(task));
+    public ResponseEntity<Task> create(@RequestBody @Valid TaskRequestDTO taskDto){
+        return ResponseEntity.status(HttpStatus.CREATED).body(taskService.create(taskDto));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Task> update(@PathVariable("id") Long id, @RequestBody Task updateTask){
-        return ResponseEntity.status(HttpStatus.OK).body(taskService.update(id, updateTask));
+    public ResponseEntity<Task> update(@PathVariable("id") Long id, @RequestBody @Valid TaskRequestDTO taskDto){
+        return ResponseEntity.status(HttpStatus.OK).body(taskService.update(id, taskDto));
+    }
+
+    @PutMapping("/changeFinished/{id}")
+    public ResponseEntity<Task> changeFinished(@PathVariable("id") Long id){
+        return ResponseEntity.status(HttpStatus.OK).body(taskService.changeFinished(id));
     }
 
     @DeleteMapping("/{id}")
