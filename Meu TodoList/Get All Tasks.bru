@@ -1,0 +1,15 @@
+meta {
+  name: Get All Tasks
+  type: http
+  seq: 2
+}
+
+get {
+  url: http://localhost:8080/api/todolist
+  body: none
+  auth: none
+}
+
+params:query {
+  ~orderBy: asc
+}

@@ -1,0 +1,19 @@
+meta {
+  name: update task
+  type: http
+  seq: 6
+}
+
+put {
+  url: http://localhost:8080/api/todolist/3
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "title": "aaaaa",
+    "description": "aaaa",
+    "priority": "urgent"
+  }
+}
