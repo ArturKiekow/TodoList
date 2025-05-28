@@ -6,11 +6,11 @@ import jakarta.validation.constraints.NotNull;
 
 public record CreateTaskDto(
 
-        @NotBlank @NotNull
+        @NotBlank(message = "{title.not.blank}")
         String title,
-        @NotBlank @NotNull
+        @NotBlank(message = "{description.not.blank}")
         String description,
-        @NotNull
+        @NotBlank(message = "{priority.not.blank}")
         String priority
 )
 {

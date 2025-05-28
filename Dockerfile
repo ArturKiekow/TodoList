@@ -1,0 +1,1 @@
+FROM maven:3.9.9-jdk-8 AS build

@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/todolist")
+@RequestMapping("/todolist")
 public class TaskController {
 
     private final TaskService taskService;
@@ -37,7 +37,7 @@ public class TaskController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<TaskResponseDto> update(@PathVariable("id") Long id, @RequestBody UpdateTaskDto taskDto){
+    public ResponseEntity<TaskResponseDto> update(@PathVariable("id") Long id, @RequestBody @Valid UpdateTaskDto taskDto){
         return ResponseEntity.status(HttpStatus.OK).body(taskService.update(id, taskDto));
     }
 
@@ -49,12 +49,12 @@ public class TaskController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> delete(@PathVariable("id") Long id){
         taskService.delete(id);
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).body("A tarefa foi deletada com sucesso");
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
     @DeleteMapping()
     public ResponseEntity<Object> deleteFinishedTasks() {
         taskService.deleteAllFinished();
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).body("As tarefas finalizadas foram deletadas com sucesso");
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 }

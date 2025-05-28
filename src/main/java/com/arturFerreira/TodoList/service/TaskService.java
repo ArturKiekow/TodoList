@@ -3,15 +3,14 @@ package com.arturFerreira.TodoList.service;
 import com.arturFerreira.TodoList.dto.CreateTaskDto;
 import com.arturFerreira.TodoList.dto.TaskResponseDto;
 import com.arturFerreira.TodoList.dto.UpdateTaskDto;
-import com.arturFerreira.TodoList.entity.Priority;
 import com.arturFerreira.TodoList.entity.Task;
+import com.arturFerreira.TodoList.exceptions.PriorityNotFoundException;
 import com.arturFerreira.TodoList.exceptions.TaskAlreadyFinishedException;
 import com.arturFerreira.TodoList.exceptions.TaskNotFoundException;
 import com.arturFerreira.TodoList.repository.PriorityRepository;
 import com.arturFerreira.TodoList.repository.TaskRepository;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 
 import java.util.List;
 
@@ -52,14 +51,16 @@ public class TaskService {
     }
 
     public List<Task> getAllFinished(){
-        return  taskRepository.findByFinishedTrue();
+        return taskRepository.findByFinishedTrue();
     }
 
     public TaskResponseDto create(CreateTaskDto taskDto){
         var task = new Task();
         task.setTitle(taskDto.title());
         task.setDescription(taskDto.description());
-        task.setPriority(priorityRepository.findByNameIgnoreCase(taskDto.priority()));
+        var priority = priorityRepository.findByNameIgnoreCase(taskDto.priority())
+                        .orElseThrow(() -> new PriorityNotFoundException("The priority is not correct or it does not exist"));
+        task.setPriority(priority);
         return TaskResponseDto.fromEntity(taskRepository.save(task));
     }
 
@@ -85,7 +86,8 @@ public class TaskService {
             task.setDescription(taskDto.description());
         }
         if (hasText(taskDto.priority())){
-            var priority = priorityRepository.findByNameIgnoreCase(taskDto.priority());
+            var priority = priorityRepository.findByNameIgnoreCase(taskDto.priority())
+                    .orElseThrow(() -> new PriorityNotFoundException("The priority is not correct or it does not exist"));
             task.setPriority(priority);
         }
     }

@@ -3,24 +3,26 @@ package com.arturFerreira.TodoList.exceptions;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
 
-public class TaskNotFoundException extends TodoListException {
+public class PriorityNotFoundException extends TodoListException {
 
     private String detail;
 
-    public TaskNotFoundException(){
-        super("Task Not Found!");
-    }
-
-    public TaskNotFoundException(String message) {
+    public PriorityNotFoundException(String message) {
         super(message);
         detail = message;
+    }
+
+    public PriorityNotFoundException(){
+        super("Priority not found");
     }
 
     @Override
     public ProblemDetail toProblemDetail() {
         var pd = ProblemDetail.forStatus(HttpStatus.NOT_FOUND);
-        pd.setTitle("Task not found");
+
+        pd.setTitle("Priority not found");
         pd.setDetail(detail);
+
         return pd;
     }
 }
